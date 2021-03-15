@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 10, 2021 at 05:54 PM
+-- Generation Time: Mar 15, 2021 at 03:20 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.15
 
@@ -24,6 +24,43 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `hobbies`
+--
+
+CREATE TABLE `hobbies` (
+  `hobbyID` int(11) NOT NULL,
+  `hobby_name` varchar(255) NOT NULL,
+  `hobby_description` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `hobbies`
+--
+
+INSERT INTO `hobbies` (`hobbyID`, `hobby_name`, `hobby_description`) VALUES
+(1, 'hobbby1', 'this is hobby 1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `userHobby`
+--
+
+CREATE TABLE `userHobby` (
+  `userID` int(11) NOT NULL,
+  `hobbyID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `userHobby`
+--
+
+INSERT INTO `userHobby` (`userID`, `hobbyID`) VALUES
+(1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -34,14 +71,27 @@ CREATE TABLE `users` (
   `surname` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `gender` varchar(255) NOT NULL,
-  `postcode` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `phone` varchar(255) NOT NULL
+  `phone_number` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`userID`, `username`, `firstname`, `surname`, `password`, `gender`, `email`, `phone_number`) VALUES
+(1, 'user1', 'name', 'surname', '', '', '', ''),
+(2, 'user2', 'firstname', 'lastname', '', '', '', '');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `hobbies`
+--
+ALTER TABLE `hobbies`
+  ADD PRIMARY KEY (`hobbyID`);
 
 --
 -- Indexes for table `users`
@@ -57,7 +107,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
