@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 15, 2021 at 03:20 PM
+-- Generation Time: Mar 21, 2021 at 09:31 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.15
 
@@ -38,7 +38,9 @@ CREATE TABLE `hobbies` (
 --
 
 INSERT INTO `hobbies` (`hobbyID`, `hobby_name`, `hobby_description`) VALUES
-(1, 'hobbby1', 'this is hobby 1');
+(1, 'Hiking', 'I like walking'),
+(2, 'Gaming', 'I like playing Video Games'),
+(3, 'Watching TV', 'I like watching films and Tv shows');
 
 -- --------------------------------------------------------
 
@@ -56,7 +58,10 @@ CREATE TABLE `userHobby` (
 --
 
 INSERT INTO `userHobby` (`userID`, `hobbyID`) VALUES
-(1, 1);
+(1, 1),
+(1, 3),
+(2, 2),
+(2, 3);
 
 -- --------------------------------------------------------
 
@@ -72,16 +77,18 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `gender` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `phone_number` varchar(255) NOT NULL
+  `phone_number` varchar(255) NOT NULL,
+  `user_description` varchar(255) NOT NULL,
+  `first_time_login` varchar(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`userID`, `username`, `firstname`, `surname`, `password`, `gender`, `email`, `phone_number`) VALUES
-(1, 'user1', 'name', 'surname', '', '', '', ''),
-(2, 'user2', 'firstname', 'lastname', '', '', '', '');
+INSERT INTO `users` (`userID`, `username`, `firstname`, `surname`, `password`, `gender`, `email`, `phone_number`, `user_description`, `first_time_login`) VALUES
+(1, 'user1', 'Name', 'Surname', '', 'male', '', '', 'Hello, this is a little bio about myself', 'y'),
+(2, 'user2', 'Firstname', 'Lastname', '', 'female', '', '', 'This is where i can write about myself', 'y');
 
 --
 -- Indexes for dumped tables
