@@ -2,6 +2,7 @@
     class Users extends CI_Controller{
         //register
         public function register(){
+            $data['title'] = 'Register';
             // var_dump($this->session->userdata('logged_in')); //this a true or false statement stating if the user is logged in or not
 
             $this->form_validation->set_rules('username', 'Username', 'required|callback_check_username_exists');
