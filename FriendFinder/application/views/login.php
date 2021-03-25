@@ -1,7 +1,7 @@
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open('users/login'); ?>
+<?php echo form_open('login'); ?>
     <div class="container">
         <h1><?= $title ?></h1>
         <div class="form-group">
@@ -18,5 +18,9 @@
         </div>
     </div>
 <?php echo form_close(); ?>
+
+<form action="signup" method="POST">
+ <button type="submit">Register</button>  
+ </form>
 
 
