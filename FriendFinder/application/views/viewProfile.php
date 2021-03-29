@@ -10,23 +10,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <?php foreach($checkUser as $user)
 {
-    echo "<h3> Welcome to $user->firstname's Profile! </h3>";
-    echo "<p> Hello, my username is ".$user->username."</p>";
-    echo "<p> My Firstname is ".$user->firstname."</p>";
-    echo "<p> My Surname is ".$user->surname."</p>";
-    echo "<p> My gender is ".$user->gender."</p>";
-    echo "<br>";
-
-    echo "<p> Little information about myself :)</p>";
-    echo "<table>";
-        echo "<td>";
-            echo "<tr>";
-                echo "<p>".$user->user_description."</p>";
-            echo "</tr>";
-        echo "</td>";
-    echo "</table>";
+    $username = $user->username;
+    $firstname = $user->firstname;
+    $surname = $user->surname;
+    $gender = $user->gender;
+    $user_description = $user->user_description;
 }
 ?>
+
+<h3> Welcome to <?php echo $firstname;?>'s Profile! </h3>
+<p> Profile Picture </p>
+<img src="<?php echo base_url();?>images/<?php echo $username;?>.png" alt="Profile Picture" width="150" height="150">
+<p> Hello, my username is <?php echo $username;?></p>
+<p> My Firstname is <?php echo $firstname;?></p>
+<p> My Surname is <?php echo $surname;?></p>
+<p> My gender is <?php echo $gender;?></p>
+<br>
+    <p> Little information about myself :)</p>
+    <table>
+        <td>
+            <tr>
+                <p><?php echo $user_description;?></p>
+            </tr>
+        </td>
+    </table>
+
 
 <p> My hobbies Include! </p>
 <table>

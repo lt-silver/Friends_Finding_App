@@ -22,6 +22,7 @@ class Welcome_model extends CI_Model {
         $this->db->from('users');
         $this->db->like('firstname',$search);
         $this->db->or_like('surname',$search);
+        $this->db->or_like('username',$search);
 
         //return results
         $query = $this->db->get();
@@ -32,10 +33,10 @@ class Welcome_model extends CI_Model {
     function getUserData() 
     {
         //create a query that returns username and password for every user
-        $query = $this->db->query("select `username` from `users`");
+        $query = $this->db->query("select `username`,`password` from `users`");
         $userData = $query->result_array();
 
-        //return data array that contains username
+        //return data array that contains username and password
         return $userData;
     }
 
@@ -48,6 +49,8 @@ class Welcome_model extends CI_Model {
         $this->db->select('surname');
         $this->db->select('user_description');
         $this->db->select('gender');
+        $this->db->select('phone_number');
+        $this->db->select('email');
         $this->db->from('users');
         $this->db->where('username', $user);
 
@@ -63,6 +66,7 @@ class Welcome_model extends CI_Model {
         $this->db->select('username');
         $this->db->select('user_description');
         $this->db->select('hobby_name');
+        $this->db->select('userHobby.hobbyID');
         $this->db->from('users');
         $this->db->join('userHobby', 'users.userID = userHobby.userID', 'inner'); 
         $this->db->join('hobbies', 'userHobby.hobbyID= hobbies.hobbyID', 'inner'); 
@@ -88,9 +92,13 @@ class Welcome_model extends CI_Model {
 
     public function register($enc_password)
     {   
+        //Hash Password
+        $userinput = $enc_password;
+        $password = password_hash($userinput ,PASSWORD_DEFAULT);
+
         $data = array(
             'username' => $this->input->post('username'),
-            'password' => $enc_password,
+            'password' => $password,
             'firstname' => $this->input->post('firstname'),
             'surname' => $this->input->post('surname'),
             'phone_number' => $this->input->post('phone_number'),
@@ -126,24 +134,67 @@ class Welcome_model extends CI_Model {
         }
     }
 
-    //log user in
-    public function login($username, $password)
+    function updateUserInfo()
     {
-        //validate login details
+        //get information from questionaire
+		$data = array(
+			'firstname'=>$this->input->post('firstname'),
+			'surname'=>$this->input->post('surname'),
+            'gender'=>$this->input->post('gender'),
+            'email'=>$this->input->post('email'),
+            'phone_number'=>$this->input->post('phone'),
+            'user_description'=>$this->input->post('user_description')
+		);
+
+        //use session username for database update
+        $username = $_SESSION['username'];
+        $id = $_SESSION['user_id'];
         $this->db->where('username', $username);
-        $this->db->where('password', $password);
+        $this->db->update('users',$data);
+        
+        //delete old Hobbies
+        $this->db->delete('userHobby', array('userID' => $id)); 
 
-        $result = $this->db->get('users');
-
-        if($result->num_rows() == 1)
+        //upload new Hobbies
+        for ($i = 1; $i < 4; $i++)
         {
+            $hobbies = array(
+                'userID' => $id,
+                'hobbyID' => $this->input->post('hobby'.$i)
+            );
 
-            return $result->row(0)->userID;
-        } 
-        else 
-        {
-            return false;
+            $this->db->insert('userHobby', $hobbies);
         }
+
+    }
+
+    //log user in
+    public function login()
+    {
+        //get user data and loop though every user 
+        $userdata = $this->getUserData();
+
+        //get username and password
+		$data = array(
+			'username'=>$this->input->post('username'),
+			'password'=>$this->input->post('password')
+		);
+
+        foreach ($userdata as $user)
+        {
+            if (password_verify($data['password'], $user['password']) && $data['username'] == $user['username'])
+            {
+                //get User id
+                $this->db->select('userID');
+                $this->db->from('users');
+                $this->db->where('username', $user['username']);
+                $query = $this->db->get();
+                $user_id = $query->row();
+
+                return $user_id->userID;
+            }
+        }
+        return false;
     }
         
     //check if username already exists

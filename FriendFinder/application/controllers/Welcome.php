@@ -44,6 +44,8 @@ class Welcome extends CI_Controller {
 			//load views
 			$this->load->view('welcome', $data);
 			$this->load->view('search', $data);
+			$this->load->view('hub', $data);
+			$this->load->view('logoutButton', $data);
 
 			//Get all users
 			$data = $this->Welcome_model->getUserData();
@@ -59,6 +61,14 @@ class Welcome extends CI_Controller {
 					$this->load->view('viewProfile', $data);
 				}
 			}
+
+			//Check your profile
+			if(null !==($this->input->post('myProfile')))
+			{
+				$data['checkUser']=$this->Welcome_model->checkUser($this->session->username);
+				$data['checkUserHobbies']=$this->Welcome_model->checkUserHobbies($this->session->username);
+				$this->load->view('viewProfile', $data);
+			}
 		}
 		else
 		{
@@ -66,12 +76,57 @@ class Welcome extends CI_Controller {
 		}
 	}
 
+	//Home page
+	public function settings()
+	{	
+		//import model for whole page
+		$data['appName'] = $this->Welcome_model->getName();
+		$data['checkUser']=$this->Welcome_model->checkUser($this->session->username);
+		$data['checkUserHobbies']=$this->Welcome_model->checkUserHobbies($this->session->username);
+		$data['hobbies']=$this->Welcome_model->getHobbies();
+
+		//load Views
+		$this->load->view('upload_form', array('error' => ' ' ));
+		$this->load->view('settings', $data);
+
+		if(null !==($this->input->post('update_user')))
+		{
+			$this->Welcome_model->updateUserInfo();
+			redirect('settings');
+		}
+	}
+
+	public function do_upload()
+	{
+			$config['upload_path']          = './images/';
+			$config['allowed_types']        = 'png';
+			$config['file_name']        = $this->session->username;
+			$config['max_size']             = 10000;
+			$config['max_width']            = 1024;
+			$config['max_height']           = 768;
+
+			$this->load->library('upload', $config);
+
+			if ( ! $this->upload->do_upload('userfile'))
+			{
+					$error = array('error' => $this->upload->display_errors());
+
+					$this->load->view('upload_form', $error);
+			}
+			else
+			{
+					$data = array('upload_data' => $this->upload->data());
+
+					$this->load->view('upload_success', $data);
+					$this->load->view('loginButtons');
+			}
+	}
+
 	//register
 	public function signup()
 	{
 		$data['title'] = 'Register';
 		$data['hobbies']=$this->Welcome_model->getHobbies();
-		// var_dump($this->session->userdata('logged_in')); //this a true or false statement stating if the user is logged in or not
 
 		$this->form_validation->set_rules('username', 'Username', 'required|callback_check_username_exists');
 		$this->form_validation->set_rules('password', 'Password', 'required');
@@ -111,26 +166,25 @@ class Welcome extends CI_Controller {
 		
 		if($this->form_validation->run() === False)
 		{
+			if ($this->session->logged_in == true)
+			{
+				$this->load->view('loginButtons');
+			}
 			$this->load->view('header');
 			$this->load->view('login', $data);
 			$this->load->view('footer');
 		} 
 		else 
 		{
-			//get username
-			$username = $this->input->post('username');
-			//get and enctype password
-			$password = $this->input->post('password');
-
 			//login user
-			$user_id = $this->Welcome_model->login($username, $password);
+			$user_id = $this->Welcome_model->login();
 
 			if($user_id != false)
 			{
 				//create session
 				$user_data = array(
 					'user_id' => $user_id,
-					'username' => $username,
+					'username' => $this->input->post('username'),
 					'logged_in' => true
 				);
 
@@ -142,7 +196,6 @@ class Welcome extends CI_Controller {
 			{
 				redirect('login');
 			}
-			
 		}
 	}
 	
@@ -154,7 +207,7 @@ class Welcome extends CI_Controller {
 		$this->session->unset_userdata('user_id');
 		$this->session->unset_userdata('username');
 				
-		redirect('register');
+		redirect('login');
 	}
 
 	//check if username already exists
@@ -183,5 +236,4 @@ class Welcome extends CI_Controller {
 			return false;
 		}
 	}
-
 }

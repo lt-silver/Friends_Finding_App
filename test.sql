@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 25, 2021 at 11:43 AM
+-- Generation Time: Mar 29, 2021 at 03:30 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.15
 
@@ -38,9 +38,20 @@ CREATE TABLE `hobbies` (
 --
 
 INSERT INTO `hobbies` (`hobbyID`, `hobby_name`, `hobby_description`) VALUES
-(1, 'Hiking', 'I like walking'),
-(2, 'Gaming', 'I like playing Video Games'),
-(3, 'Watching TV', 'I like watching films and Tv shows');
+(1, 'Hiking', 'I like to have long walks'),
+(2, 'Gaming', 'I like playing video games'),
+(3, 'Watching TV', 'I like watching films and Tv shows'),
+(4, 'Board Games', 'I like playing board games'),
+(5, 'Photography', 'I like taking pictures of things'),
+(6, 'Cooking', 'I like making food'),
+(7, 'Exercising', 'I like going gym or home exercising'),
+(8, 'DIY', 'I like to do fix and construct things myself at home'),
+(9, 'Dancing', 'I like to dance'),
+(10, 'Martial arts', 'I like fighting'),
+(11, 'Cycling', 'I like going on bike rides'),
+(12, 'Singing', 'I like to sing'),
+(13, 'Music', 'I like listening to music'),
+(14, 'Talking', 'I like talking to people');
 
 -- --------------------------------------------------------
 
@@ -59,9 +70,12 @@ CREATE TABLE `userHobby` (
 --
 
 INSERT INTO `userHobby` (`userHobbyID`, `userID`, `hobbyID`) VALUES
-(1, 3, 1),
-(2, 3, 2),
-(3, 3, 3);
+(7, 5, 1),
+(8, 5, 5),
+(9, 5, 6),
+(10, 6, 6),
+(11, 6, 12),
+(12, 6, 14);
 
 -- --------------------------------------------------------
 
@@ -86,7 +100,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userID`, `username`, `firstname`, `surname`, `password`, `gender`, `email`, `phone_number`, `user_description`) VALUES
-(3, 'Silver', 'Silverijus', 'Scerbavicius', '123', 'male', 'semail@gmail.com', '07867435795', 'user description');
+(5, 'Silver', 'Silverijus', 'Scerbavicius', '$2y$10$WQkTn9D3C6e9aJAQ81h.Nu7j9tcar24En7S6qe4vi0vHgpfvkkoJG', 'male', 'silverijus.scerbavicius@gmail.com', '07867435785', 'Bio'),
+(6, 'user1', 'User', 'Username', '$2y$10$pexN8gfwcxd/D/09slIknuUi4drEsTAVfl647H0Uuo86KZptyFQoS', 'female', 'username@gmail.com', '07852414124', 'hello hello');
 
 --
 -- Indexes for dumped tables
@@ -118,13 +133,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `userHobby`
 --
 ALTER TABLE `userHobby`
-  MODIFY `userHobbyID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `userHobbyID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

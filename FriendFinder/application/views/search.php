@@ -23,8 +23,15 @@ if(null !==($this->input->post('search')) )
 		{  
 			echo "<table>";
 				echo "<tr>";
+					echo "<td><strong>Username: </strong></td>";
+					echo "<td>".$row->username."</td>";
+				echo "</tr>";
+				echo "<tr>";
+					echo "<td><strong>Full name: </strong></td>";
 					echo "<td>".$row->firstname."</td>";
 					echo "<td>".$row->surname."</td>";
+				echo "</tr>";
+				echo "<tr>";
 					echo "<td>"; ?><form action="" method="POST"> <button type="submit"name="<?php echo"$row->username"?>">View Profile</button></form><?php echo"</td>";
 				echo "</tr>";
 			echo "</table>";
