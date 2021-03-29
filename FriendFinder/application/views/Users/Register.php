@@ -6,7 +6,7 @@
         <p>Please fill in this form to create an account.</p>
         <hr>
 
-        <h2>Login Details</h2>
+        <h2>Login d</h2>
         
         <label for="username"><b>Username</b></label>
         <input type="text" placeholder="Enter Username" name="username" id="username">
