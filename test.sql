@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 29, 2021 at 03:30 PM
+-- Generation Time: Apr 12, 2021 at 04:18 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.15
 
@@ -56,6 +56,21 @@ INSERT INTO `hobbies` (`hobbyID`, `hobby_name`, `hobby_description`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `userChat`
+--
+
+CREATE TABLE `userChat` (
+  `userChatID` int(11) NOT NULL,
+  `senderID` int(11) NOT NULL,
+  `recieverID` int(11) NOT NULL,
+  `message` varchar(255) NOT NULL,
+  `date` varchar(255) NOT NULL,
+  `time` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `userHobby`
 --
 
@@ -70,12 +85,15 @@ CREATE TABLE `userHobby` (
 --
 
 INSERT INTO `userHobby` (`userHobbyID`, `userID`, `hobbyID`) VALUES
-(7, 5, 1),
-(8, 5, 5),
-(9, 5, 6),
-(10, 6, 6),
-(11, 6, 12),
-(12, 6, 14);
+(1, 1, 1),
+(2, 1, 7),
+(3, 1, 5),
+(7, 2, 2),
+(8, 2, 4),
+(9, 2, 1),
+(13, 4, 1),
+(14, 4, 7),
+(15, 4, 3);
 
 -- --------------------------------------------------------
 
@@ -100,8 +118,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userID`, `username`, `firstname`, `surname`, `password`, `gender`, `email`, `phone_number`, `user_description`) VALUES
-(5, 'Silver', 'Silverijus', 'Scerbavicius', '$2y$10$WQkTn9D3C6e9aJAQ81h.Nu7j9tcar24En7S6qe4vi0vHgpfvkkoJG', 'male', 'silverijus.scerbavicius@gmail.com', '07867435785', 'Bio'),
-(6, 'user1', 'User', 'Username', '$2y$10$pexN8gfwcxd/D/09slIknuUi4drEsTAVfl647H0Uuo86KZptyFQoS', 'female', 'username@gmail.com', '07852414124', 'hello hello');
+(1, 'Silver', 'Silverijus', 'Scerbavicius', '$2y$10$2nWZs66UXSEYz5YIDXuTW.r8nnvvWhpv42R9IkQ2k1qB7i/M6bApK', 'male', 'silverijus.scerbavicius@gmail.com', '07867435795', 'Just love exploring <3'),
+(2, 'user1', 'Serial', 'Gamer', '$2y$10$AERdU/BQPLSS.Wg2OuJvZe/yEZ3umsz6c7JAemgIdeyb2N2bPP4O6', 'male', 'gaming@gmail.com', '078124123132', 'I like to game...'),
+(4, 'Georgie', 'Georgie', 'Charn', '$2y$10$vp57uMQ9.VB81e.vyO.WZOaMWKlqfLbZhI5yrAcSnreCWzD8cWPoS', 'female', 'g.c@gmail.com', '078312321323', 'Hello, i\'m Georgie.');
 
 --
 -- Indexes for dumped tables
@@ -112,6 +131,12 @@ INSERT INTO `users` (`userID`, `username`, `firstname`, `surname`, `password`, `
 --
 ALTER TABLE `hobbies`
   ADD PRIMARY KEY (`hobbyID`);
+
+--
+-- Indexes for table `userChat`
+--
+ALTER TABLE `userChat`
+  ADD PRIMARY KEY (`userChatID`);
 
 --
 -- Indexes for table `userHobby`
@@ -130,16 +155,22 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `userChat`
+--
+ALTER TABLE `userChat`
+  MODIFY `userChatID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
 -- AUTO_INCREMENT for table `userHobby`
 --
 ALTER TABLE `userHobby`
-  MODIFY `userHobbyID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `userHobbyID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

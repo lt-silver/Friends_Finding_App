@@ -78,7 +78,6 @@ foreach($hobbies as $hobby)
 <option value="<?php echo $hobby3; ?>"><?php echo $hobby_name3?></option>
 </optgroup>
 <optgroup label="Options">
-<option value=""></option>
 <?php 
 foreach($hobbies as $hobby)
 {

@@ -1,3 +1,4 @@
+<div class="container">
 <h1><?= $title ?></h1> <!-- gets title from view function in controller -->
 <?php echo validation_errors(); ?>
 
@@ -76,7 +77,7 @@ foreach($hobbies as $hobby)
 <br><br>
         <button type="submit" class="registerbtn">Register</button>
     </div>
-
+</div>
     <div class="container signin">
         <p>Already have an account? <a href="<?php echo base_url(); ?>index.php/login">Sign in</a>.</p>
     </div>

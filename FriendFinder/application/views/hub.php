@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body>
 <hr>
 <form action="" method="POST">
- <button type="submit" name="myProfile">See My Profile</button>  
+<button type="submit" name="myProfile">See My Profile</button>  
 </form>
 
 <form action="settings" method="POST">

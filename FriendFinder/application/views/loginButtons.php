@@ -20,4 +20,4 @@ echo $this->session->username;
 
 <form action="hub" method="POST">
  <button type="submit">Back to my Profile</button>  
- </form>
+</form>

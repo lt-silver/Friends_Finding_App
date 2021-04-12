@@ -14,19 +14,41 @@ class Welcome_model extends CI_Model {
     {
         //get information from search
 		$search = $this->input->post('search');
+        $hobby = $this->input->post('hobbySearch');
 
-        //costruct query
-        $this->db->select('username');
-        $this->db->select('firstname');
-        $this->db->select('surname');
-        $this->db->from('users');
-        $this->db->like('firstname',$search);
-        $this->db->or_like('surname',$search);
-        $this->db->or_like('username',$search);
+        if(null !==($this->input->post('searchByName')))
+        {
+            //costruct query
+            $this->db->select('username');
+            $this->db->select('firstname');
+            $this->db->select('surname');
+            $this->db->from('users');
+            $this->db->like('firstname',$search);
+            $this->db->or_like('surname',$search);
+            $this->db->or_like('username',$search);
 
-        //return results
-        $query = $this->db->get();
-        return $query;
+            //return results
+            $query = $this->db->get();
+            return $query;
+        }
+        if(null !==($this->input->post('searchByHobby')))
+        {
+            //costruct query
+            $this->db->select('username');
+            $this->db->select('firstname');
+            $this->db->select('surname');
+            $this->db->select('hobbyID');
+            
+            $this->db->from('users');
+            $this->db->join('userHobby', 'users.userID = userHobby.userID', 'inner'); 
+
+            $this->db->like('hobbyID',$hobby);
+
+            //return results
+            $query = $this->db->get();
+            return $query;
+
+        }
     }
 
     //import user data
@@ -38,6 +60,21 @@ class Welcome_model extends CI_Model {
 
         //return data array that contains username and password
         return $userData;
+    }
+
+    //check user id
+    function checkUserID($user) 
+    {
+        //costruct query
+        $this->db->select('userID');
+        $this->db->from('users');
+        $this->db->where('username', $user);
+
+        //return results
+        $query = $this->db->get();
+        $id = $query->row();
+        $userID = $id->userID;
+        return $userID;
     }
 
     //check user details
@@ -76,6 +113,51 @@ class Welcome_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+
+    //check user details
+    function checkUserById($id) 
+    {
+        //costruct query
+        $this->db->select('username');
+        $this->db->select('firstname');
+        $this->db->select('surname');
+        $this->db->from('users');
+        $this->db->where('userID', $id);
+
+        //return results
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    //check user posts
+    function checkUserPosts() 
+    {
+          //costruct query
+          $this->db->select('userChatID');
+          $this->db->select('recieverID');
+          $this->db->select('senderID');
+          $this->db->select('message');
+          $this->db->select('time');
+          $this->db->select('date');
+          $this->db->select('username');
+          $this->db->select('firstname');
+          $this->db->select('surname');
+          $this->db->from('users');
+          $this->db->join('userChat', 'users.userID = userChat.recieverID', 'inner'); 
+          $this->db->order_by('userChatID DESC');
+          $this->db->like('userChat.recieverID',$this->session->reciever);
+
+          //return results
+          $query = $this->db->get();
+          return $query->result();
+      }
+
+      //delete post
+      function deletePost($postID) 
+      {
+        $this->db->where('userChatID', $postID);
+        $this->db->delete('userChat');
+      }
 
     function getHobbies() 
     {
@@ -166,6 +248,32 @@ class Welcome_model extends CI_Model {
             $this->db->insert('userHobby', $hobbies);
         }
 
+    }
+
+    function sendPost()
+    {   
+        //Daylight Saving
+        if (date('I', time()))
+        {
+            $time = date('H:i', strtotime(" -1 hours"));
+        }
+        else
+        {
+            $time = date('H:i');
+        }
+
+        //today date
+        $date = date('d-m-y');
+
+        $message = array(
+            'senderID' => $this->session->user_id,
+            'recieverID' => $this->session->reciever,
+            'date' => $date,
+            'time' => $time,
+            'message' => $this->input->post('message'),
+        );
+
+        $this->db->insert('userChat', $message);
     }
 
     //log user in

@@ -18,7 +18,8 @@ class Welcome extends CI_Controller {
 		$this->load->model('Welcome_model');
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
-		var_dump($_SESSION);
+		$this->load->view('header');
+		// var_dump($_SESSION);
 
 		//connect to database
 		$this->load->database();
@@ -35,6 +36,7 @@ class Welcome extends CI_Controller {
 	{	
 		//import model for whole page
 		$data['appName'] = $this->Welcome_model->getName();
+		$data['hobbies']=$this->Welcome_model->getHobbies();
 		
 		if ($this->session->logged_in == true)
 		{
@@ -56,18 +58,95 @@ class Welcome extends CI_Controller {
 				//if username is selected
 				if(null !==($this->input->post($user['username'])))
 				{
-					$data['checkUser']=$this->Welcome_model->checkUser($user['username']);
-					$data['checkUserHobbies']=$this->Welcome_model->checkUserHobbies($user['username']);
+					$this->session->selected_username = $user['username'];
+					$this->session->reciever = $this->Welcome_model->checkUserID($this->session->selected_username);
+
+					//load view profile data
+					$data['checkUser']=$this->Welcome_model->checkUser($this->session->selected_username);
+					$data['checkUserHobbies']=$this->Welcome_model->checkUserHobbies($this->session->selected_username);
+					$data['checkUserPosts']=$this->Welcome_model->checkUserPosts();
 					$this->load->view('viewProfile', $data);
+					$this->load->view('messages', $data);
 				}
 			}
 
 			//Check your profile
 			if(null !==($this->input->post('myProfile')))
 			{
+				//load view profile data
+				$this->session->reciever = $this->session->user_id;
 				$data['checkUser']=$this->Welcome_model->checkUser($this->session->username);
 				$data['checkUserHobbies']=$this->Welcome_model->checkUserHobbies($this->session->username);
+				$data['checkUserPosts']=$this->Welcome_model->checkUserPosts($this->session->username);
 				$this->load->view('viewProfile', $data);
+				$this->load->view('messages', $data);
+			}
+
+			if(null !==($this->input->post('send_post')))
+			{
+				//send post 
+				$this->Welcome_model->sendPost();
+
+				if ($this->session->user_id == $this->session->reciever )
+				{
+					$data['checkUser']=$this->Welcome_model->checkUser($this->session->username);
+					$data['checkUserHobbies']=$this->Welcome_model->checkUserHobbies($this->session->username);
+					$data['checkUserPosts']=$this->Welcome_model->checkUserPosts($this->session->username);
+					$this->load->view('viewProfile', $data);
+					$this->load->view('messages', $data);
+				}
+				else
+				{
+					$data['checkUser']=$this->Welcome_model->checkUser($this->session->selected_username);
+					$data['checkUserHobbies']=$this->Welcome_model->checkUserHobbies($this->session->selected_username);
+					$data['checkUserPosts']=$this->Welcome_model->checkUserPosts();
+					$this->load->view('viewProfile', $data);
+					$this->load->view('messages', $data);
+				}	
+			}
+			if(null !==($this->input->post('delete')))
+			{
+				if ($this->input->post('senderID') == $this->session->user_id)				
+				{
+					echo "Post Deleted!";
+					$this->Welcome_model->deletePost($this->input->post('deleteID'));
+					if ($this->session->user_id == $this->session->reciever )
+					{
+						$data['checkUser']=$this->Welcome_model->checkUser($this->session->username);
+						$data['checkUserHobbies']=$this->Welcome_model->checkUserHobbies($this->session->username);
+						$data['checkUserPosts']=$this->Welcome_model->checkUserPosts($this->session->username);
+						$this->load->view('viewProfile', $data);
+						$this->load->view('messages', $data);
+					}
+					else
+					{
+						$data['checkUser']=$this->Welcome_model->checkUser($this->session->selected_username);
+						$data['checkUserHobbies']=$this->Welcome_model->checkUserHobbies($this->session->selected_username);
+						$data['checkUserPosts']=$this->Welcome_model->checkUserPosts();
+						$this->load->view('viewProfile', $data);
+						$this->load->view('messages', $data);
+					}	
+				}
+				else
+				{
+					echo "You cannot DELETE Someone else's post!";
+					if ($this->session->user_id == $this->session->reciever )
+					{
+						$data['checkUser']=$this->Welcome_model->checkUser($this->session->username);
+						$data['checkUserHobbies']=$this->Welcome_model->checkUserHobbies($this->session->username);
+						$data['checkUserPosts']=$this->Welcome_model->checkUserPosts($this->session->username);
+						$this->load->view('viewProfile', $data);
+						$this->load->view('messages', $data);
+					}
+					else
+					{
+						$data['checkUser']=$this->Welcome_model->checkUser($this->session->selected_username);
+						$data['checkUserHobbies']=$this->Welcome_model->checkUserHobbies($this->session->selected_username);
+						$data['checkUserPosts']=$this->Welcome_model->checkUserPosts();
+						$this->load->view('viewProfile', $data);
+						$this->load->view('messages', $data);
+					}	
+				}
 			}
 		}
 		else
@@ -139,7 +218,6 @@ class Welcome extends CI_Controller {
 	
 		if($this->form_validation->run() === False)
 		{
-			$this->load->view('header');
 			$this->load->view('signup', $data);
 			$this->load->view('footer');
 		} 
@@ -170,7 +248,6 @@ class Welcome extends CI_Controller {
 			{
 				$this->load->view('loginButtons');
 			}
-			$this->load->view('header');
 			$this->load->view('login', $data);
 			$this->load->view('footer');
 		} 
