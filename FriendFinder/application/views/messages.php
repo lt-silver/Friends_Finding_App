@@ -1,3 +1,12 @@
+<?php
+foreach($checkUser as $user)
+{
+    $private = $user->private;
+    $username = $user->username;
+}
+if ($private == "No" || $this->session->username == $username)
+{
+?>
 <h1> My posts! </h1>
 <hr>
 <h5> Write new post </h5>
@@ -46,4 +55,6 @@ $senderID = $post->senderID;
 </div>
 <?php
 }
+}
+
 ?>  

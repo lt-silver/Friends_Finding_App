@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 12, 2021 at 04:18 PM
+-- Generation Time: Apr 16, 2021 at 02:45 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.15
 
@@ -68,6 +68,13 @@ CREATE TABLE `userChat` (
   `time` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `userChat`
+--
+
+INSERT INTO `userChat` (`userChatID`, `senderID`, `recieverID`, `message`, `date`, `time`) VALUES
+(34, 2, 2, 'my new post', '12-04-21', '15:30');
+
 -- --------------------------------------------------------
 
 --
@@ -85,15 +92,15 @@ CREATE TABLE `userHobby` (
 --
 
 INSERT INTO `userHobby` (`userHobbyID`, `userID`, `hobbyID`) VALUES
-(1, 1, 1),
-(2, 1, 7),
-(3, 1, 5),
 (7, 2, 2),
 (8, 2, 4),
 (9, 2, 1),
-(13, 4, 1),
-(14, 4, 7),
-(15, 4, 3);
+(25, 1, 1),
+(26, 1, 7),
+(27, 1, 5),
+(28, 4, 1),
+(29, 4, 7),
+(30, 4, 3);
 
 -- --------------------------------------------------------
 
@@ -110,17 +117,18 @@ CREATE TABLE `users` (
   `gender` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `phone_number` varchar(255) NOT NULL,
-  `user_description` varchar(255) NOT NULL
+  `user_description` varchar(255) NOT NULL,
+  `private` varchar(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`userID`, `username`, `firstname`, `surname`, `password`, `gender`, `email`, `phone_number`, `user_description`) VALUES
-(1, 'Silver', 'Silverijus', 'Scerbavicius', '$2y$10$2nWZs66UXSEYz5YIDXuTW.r8nnvvWhpv42R9IkQ2k1qB7i/M6bApK', 'male', 'silverijus.scerbavicius@gmail.com', '07867435795', 'Just love exploring <3'),
-(2, 'user1', 'Serial', 'Gamer', '$2y$10$AERdU/BQPLSS.Wg2OuJvZe/yEZ3umsz6c7JAemgIdeyb2N2bPP4O6', 'male', 'gaming@gmail.com', '078124123132', 'I like to game...'),
-(4, 'Georgie', 'Georgie', 'Charn', '$2y$10$vp57uMQ9.VB81e.vyO.WZOaMWKlqfLbZhI5yrAcSnreCWzD8cWPoS', 'female', 'g.c@gmail.com', '078312321323', 'Hello, i\'m Georgie.');
+INSERT INTO `users` (`userID`, `username`, `firstname`, `surname`, `password`, `gender`, `email`, `phone_number`, `user_description`, `private`) VALUES
+(1, 'Silver', 'Silverijus', 'Scerbavicius', '$2y$10$2nWZs66UXSEYz5YIDXuTW.r8nnvvWhpv42R9IkQ2k1qB7i/M6bApK', 'male', 'silverijus.scerbavicius@gmail.com', '07867435795', 'Just love exploring <3', 'Yes'),
+(2, 'user1', 'Serial', 'Gamer', '$2y$10$AERdU/BQPLSS.Wg2OuJvZe/yEZ3umsz6c7JAemgIdeyb2N2bPP4O6', 'male', 'gaming@gmail.com', '078124123132', 'I like to game...', 'No'),
+(4, 'Georgie', 'Georgie', 'Charn', '$2y$10$vp57uMQ9.VB81e.vyO.WZOaMWKlqfLbZhI5yrAcSnreCWzD8cWPoS', 'female', 'g.c@gmail.com', '078312321323', 'Hello, i\'m Georgie.', 'Yes');
 
 --
 -- Indexes for dumped tables
@@ -158,13 +166,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `userChat`
 --
 ALTER TABLE `userChat`
-  MODIFY `userChatID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `userChatID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `userHobby`
 --
 ALTER TABLE `userHobby`
-  MODIFY `userHobbyID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `userHobbyID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `users`

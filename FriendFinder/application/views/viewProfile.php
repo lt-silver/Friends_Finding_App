@@ -15,7 +15,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     $surname = $user->surname;
     $gender = $user->gender;
     $user_description = $user->user_description;
+    $private = $user->private;
 }
+
+if ($private == "No" || $this->session->username == $username)
+{
 ?>
 
 <h3> Welcome to <?php echo $firstname;?>'s Profile! </h3>
@@ -45,6 +49,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 foreach($checkUserHobbies as $user)
 {
     echo "<p>".$user->hobby_name."</p>";
+}
+}
+else
+{
+?>
+    <h3><?php echo $firstname;?>'s Profile is Private </h3>
+<?php
 }
 ?>
 

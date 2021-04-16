@@ -18,6 +18,7 @@ foreach($checkUser as $user)
     $gender = $user->gender;
     $email = $user->email;
     $phone = $user->phone_number;
+    $private = $user->private;
     $user_description = $user->user_description;
 }
 
@@ -87,6 +88,20 @@ foreach($hobbies as $hobby)
 </optgroup>
 </select>
 <br><br>
+
+<h2>Privacy</h2><hr>
+<p> Private Mode</p>
+<select name="private">
+<optgroup label="Previous set value">
+<option value="<?php echo $private ?>"><?php echo $private?></option>
+</optgroup>
+<optgroup label="Options">
+<option value="No">No</option>
+<option value="Yes">Yes</option>
+</optgroup>
+</select>
+<hr>
+<br>
 
 
 <button type="submit"name="update_user">Save Settings</button>

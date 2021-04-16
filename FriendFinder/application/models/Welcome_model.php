@@ -26,6 +26,7 @@ class Welcome_model extends CI_Model {
             $this->db->like('firstname',$search);
             $this->db->or_like('surname',$search);
             $this->db->or_like('username',$search);
+            
 
             //return results
             $query = $this->db->get();
@@ -37,11 +38,10 @@ class Welcome_model extends CI_Model {
             $this->db->select('username');
             $this->db->select('firstname');
             $this->db->select('surname');
-            $this->db->select('hobbyID');
-            
+            $this->db->select('hobbyID'); 
             $this->db->from('users');
+            $this->db->where('private','No');
             $this->db->join('userHobby', 'users.userID = userHobby.userID', 'inner'); 
-
             $this->db->like('hobbyID',$hobby);
 
             //return results
@@ -86,6 +86,7 @@ class Welcome_model extends CI_Model {
         $this->db->select('surname');
         $this->db->select('user_description');
         $this->db->select('gender');
+        $this->db->select('private');
         $this->db->select('phone_number');
         $this->db->select('email');
         $this->db->from('users');
@@ -225,6 +226,7 @@ class Welcome_model extends CI_Model {
             'gender'=>$this->input->post('gender'),
             'email'=>$this->input->post('email'),
             'phone_number'=>$this->input->post('phone'),
+            'private'=>$this->input->post('private'),
             'user_description'=>$this->input->post('user_description')
 		);
 
