@@ -7,11 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<title><?php echo $appName;?></title>
 </head>
 <body>
-<hr>
-<form action="" method="POST">
-<button type="submit" name="myProfile">See My Profile</button>  
-</form>
 
-<form action="settings" method="POST">
- <button type="submit">Settings</button>  
+<form action="logout" method="POST">
+ <button type="submit">Logout</button>  
 </form>

@@ -1,7 +1,8 @@
+<div class="container">
 <h1><?= $title ?></h1> <!-- gets title from view function in controller -->
 <?php echo validation_errors(); ?>
 
-<?php echo form_open('users/register'); ?>
+<?php echo form_open('signup'); ?>
     <div class="form-group">
         <p>Please fill in this form to create an account.</p>
         <hr>
@@ -34,11 +35,51 @@
         <label for="gender"><b>Gender</b></label>
         <input type="text" placeholder="Enter gender" name="gender" id="gender" >
 <br>
+<hr>
+<h2>Hobbies</h2>
+<p> Please select your first hobby </p>
+<select name="hobby1">
+<option value=""></option>
+<?php 
+foreach($hobbies as $hobby)
+{
+    echo "<option value=".$hobby->hobbyID.">".$hobby->hobby_name."</option>";
+}
+?>
+</select>
+
+<p> Please select your second hobby </p>
+<select name="hobby2">
+<option value=""></option>
+<?php 
+foreach($hobbies as $hobby)
+{
+    echo "<option value=".$hobby->hobbyID.">".$hobby->hobby_name."</option>";
+}
+?>
+</select>
+
+<p> Please select your third hobby </p>
+<select name="hobby3">
+<option value=""></option>
+<?php 
+foreach($hobbies as $hobby)
+{
+    echo "<option value=".$hobby->hobbyID.">".$hobby->hobby_name."</option>";
+}
+?>
+</select>
+
+<p> Tell us a little about yourself </p>
+<textarea name="user_description" rows="4" cols="50">
+</textarea>
+
+<br><br>
         <button type="submit" class="registerbtn">Register</button>
     </div>
-
+</div>
     <div class="container signin">
-        <p>Already have an account? <a href="<?php echo base_url(); ?>users/login">Sign in</a>.</p>
+        <p>Already have an account? <a href="<?php echo base_url(); ?>index.php/login">Sign in</a>.</p>
     </div>
 
    
