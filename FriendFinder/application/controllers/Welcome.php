@@ -106,7 +106,7 @@ class Welcome extends CI_Controller {
 			}
 			if(null !==($this->input->post('delete')))
 			{
-				if ($this->input->post('senderID') == $this->session->user_id)				
+				if ($this->input->post('senderID') == $this->session->user_id || $this->input->post('recieverID') == $this->session->user_id)				
 				{
 					echo "Post Deleted!";
 					$this->Welcome_model->deletePost($this->input->post('deleteID'));
@@ -237,11 +237,14 @@ class Welcome extends CI_Controller {
 	//user login
 	public function login()
 	{
+		//title
 		$data['title'] = 'Log In';
 
+		//form rules
 		$this->form_validation->set_rules('username', 'Username', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');
 		
+		//if rules fail
 		if($this->form_validation->run() === False)
 		{
 			if ($this->session->logged_in == true)
@@ -251,6 +254,7 @@ class Welcome extends CI_Controller {
 			$this->load->view('login', $data);
 			$this->load->view('footer');
 		} 
+		//if sucessful
 		else 
 		{
 			//login user

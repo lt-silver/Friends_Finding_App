@@ -35,6 +35,7 @@ $time = $post->time;
 $date = $post->date;
 $userChatID = $post->userChatID;
 $senderID = $post->senderID;
+$recieverID = $post->recieverID;
 
 ?>
 <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
@@ -44,6 +45,7 @@ $senderID = $post->senderID;
     <form action="" method="POST">
     <input type="hidden" name="deleteID" value="<?php echo $userChatID; ?>">
     <input type="hidden" name="senderID" value="<?php echo $senderID; ?>">
+    <input type="hidden" name="recieverID" value="<?php echo $recieverID; ?>">
     <button type="submit" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" name="delete">
       <span aria-hidden="true">&times;</span>
     </button>

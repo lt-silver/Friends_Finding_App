@@ -187,6 +187,7 @@ class Welcome_model extends CI_Model {
             'phone_number' => $this->input->post('phone_number'),
             'email' => $this->input->post('email'),
             'user_description' => $this->input->post('user_description'),
+            'private' => "No",
             'gender' => $this->input->post('gender')
         );
 
@@ -290,8 +291,10 @@ class Welcome_model extends CI_Model {
 			'password'=>$this->input->post('password')
 		);
 
+        //for every user
         foreach ($userdata as $user)
         {
+            //if data inputed matches
             if (password_verify($data['password'], $user['password']) && $data['username'] == $user['username'])
             {
                 //get User id
@@ -301,9 +304,11 @@ class Welcome_model extends CI_Model {
                 $query = $this->db->get();
                 $user_id = $query->row();
 
+                //return id and login
                 return $user_id->userID;
             }
         }
+        //else return false
         return false;
     }
         
